@@ -20,23 +20,45 @@ class knn(object):
         self.y_train = np.array(y).flatten()
 
 
+    def k_neighbour_values(self, xi):
+        """
+        Determines the values of the k nearest neighbours to a passed entry xi
+        """
+        distances = np.empty(len(self.X_train))
+
+        for j, x_t in enumerate(self.X_train):
+            coord_distance = np.linalg.norm(xi-x_t)
+            distances[j] = coord_distance
+
+        k_indices = np.argsort(distances)[:self.k_neighbours]
+        k_labels = self.y_train[k_indices]     # labels of the k nearest neighnours, flatten for bincount
+        return k_labels
+
+
     def predict_clf(self, X):
         """
-        predicts the classification of the passed array which are returned as a flattened numpy array
+        predicts the classification labels of the passed matrix
         """
         predictions = np.empty(len(X))
 
         for i, xi in enumerate(X):  # calculates the distances between the passed coordinate xi and each training point x_t
+            k_labels = knn.k_neighbour_values(self, xi)
+            class_votes = np.bincount(k_labels)
+            split_vote = np.where(class_votes == class_votes.max())[0]  # labels of all votes if equal number of votes between classes
+            predictions[i] = np.random.choice(split_vote)  # random choice if more than one prediction
 
-            distances = np.empty(len(self.X_train))
+        return predictions
 
-            for j, x_t in enumerate(self.X_train):
-                coord_distance = np.linalg.norm(xi-x_t)
-                distances[j] = coord_distance
 
-            k_indices = np.argsort(distances)[:self.k_neighbours]
-            k_labels = self.y_train[k_indices].flatten()        # labels of the k nearest neighnours, flatten for bincount
-            majority_clf = np.bincount(k_labels).argmax()  # ISSUE : will always classify as the class with lowest magnitude if a 50:50 vote is reached, need to update with an n sided coin flip
-            predictions[i] = majority_clf
+    def predict_reg(self, X):
+        """
+        UNTESTED!!!!!!!
+        predicts the regression values of the passed matrix
+        """
+        predictions = np.empty(len(X))
+
+        for i, xi in enumerate(X):  # calculates the distances between the passed coordinate xi and each training point x_t
+            k_labels = knn.k_neighbour_values(self, xi)
+            predictions[i] = k_labels.mean()  # average returned label values
 
         return predictions
