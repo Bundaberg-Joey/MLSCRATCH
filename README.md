@@ -1,12 +1,34 @@
 # MLSCRATCH
-This respository contains various machine learning models implemented from scratch as part of the MA50263 "Mathematics of Machine Learning" module I'm undertaking as part of my graduate studies.
+* Contains implementations of popular machine learning algorithms I've come acrossed during graduate studies / further development
+* The algorithms can either be: Classifiers (Clf), Regressors (Reg), or Unsupervised (Uns)
+* Tests are soon to also be included for the algorithms
+___
+## Algorithms
+### Anomaly Detector (Clf)
+* Learns to classify if data points should be considered as outliers or not.
 
-## KNN : *k* nearest neighbours classification / regression
-* Model's classification performance tested against the `breast cancer dataset`
-* Model's regression performance tested against the `auto_mpg`
+### Gaussian Process (Reg)
+* Mean shifted implementationallowing it to avoid the tyical problems where mean is assumed to be 0 or sample mean.
 
-#### TODO:
-* Combine regression and classification into singular predict function which takes keyword argument
+### K Means Clustering (Uns)
+* Common unsupervised clustering technique. 
 
+### *K* Nearest Neighbours (Clf, Reg)
+* Non parametric method to predict values based on nearby training points.
 
+### Linear Regression (Reg)
+* Predict continuous data using a linear model.
+
+### Logistic Regression (Clf)
+* Create a decision boundary to enable binary classification.
+
+### Naive Bayes Classifier (Clf)
+* Assuming fully independant variables, allows for prediction based on cumulative probability.
+
+### Neural Network (Clf)
+* Numerous independant algorithms networking together to produce non linear decision boundaries like XOR.
+
+___
+## Tests
+* Coming Soon
 
